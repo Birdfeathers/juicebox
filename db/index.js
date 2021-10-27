@@ -28,6 +28,15 @@ async function getAllUsers() {
     }
   }
 
+  async function getAllTags() {
+    
+    const {rows} = await client.query(`
+    SELECT *
+    FROM tags;`)
+    return rows;
+    
+  }
+
   async function createUser({ 
     username, 
     password,
@@ -299,5 +308,6 @@ async function getAllUsers() {
     getUserById,
     addTagsToPost,
     createTags,
-    getPostsByTagName
+    getPostsByTagName,
+    getAllTags
   }
