@@ -62,7 +62,7 @@ async function getAllUsers() {
     authorId,
     title,
     content,
-    tags = [] // this is new
+    tags = [] 
   }) {
     try {
       const { rows: [ post ] } = await client.query(`
@@ -131,6 +131,12 @@ async function getAllUsers() {
         FROM posts
         WHERE id=$1;
       `, [postId]);
+      if (!post) {
+        throw {
+          name: "PostNotFoundError",
+          message: "Could not find a post with that postId"
+        };
+      }
   
       const { rows: tags } = await client.query(`
         SELECT tags.*
@@ -325,5 +331,6 @@ async function getAllUsers() {
     createTags,
     getPostsByTagName,
     getAllTags,
-    getUserByUsername
+    getUserByUsername,
+    getPostById
   }
